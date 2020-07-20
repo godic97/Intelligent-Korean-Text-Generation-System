@@ -4,6 +4,8 @@ import util
 
 np.set_printoptions(threshold=sys.maxsize)
 
-catalog = util.loadCatalog()
+id_2_dict = util.loadId_2_dict()
 
-print(catalog)
+print(id_2_dict.shape)
+print(id_2_dict)
+

@@ -11,4 +11,4 @@ print(dataSet)
 dataSet = pd.DataFrame(dataSet, columns={"상호명": "string",
                                                    "상권업종대분류코드": "string", "상권업종중분류코드": "string",
                                                    "상권업종소분류코드": "string", "표준산업분류코드": "string"})
-dataSet.to_csv("../data/store_non_branch_name_attribute.csv", na_rep="0", index=False, encoding="utf-8")
+# dataSet.to_csv("../data/store_non_branch_name_attribute.csv", na_rep="0", index=False, encoding="utf-8")
