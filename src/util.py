@@ -63,3 +63,22 @@ def cos_similarity(xp, yp):
     similarity = similarity / l2
 
     return similarity
+
+def loadIcode(idx="id"):
+    if idx =="dict":
+        icode = np.load("../data/dict_industryCode.npy", allow_pickle=True)
+    elif idx == "id":
+        icode = np.load("../data/id_industryCode.npy", allow_pickle=True).item()
+    return icode
+
+def loadCorpus(idx="id"):
+    if idx == "dict":
+        corpus = np.load("../data/dict_store.npy", allow_pickle=True)
+    elif idx == "id":
+        corpus = np.load("../data/id_store.npy", allow_pickle=True).item()
+    return corpus
+
+def counter(cnt=0, max=0):
+    if cnt % 10000 == 0:
+        print("max: ", max, " now: ", cnt)
+    return cnt + 1
