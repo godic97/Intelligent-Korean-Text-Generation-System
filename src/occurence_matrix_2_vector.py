@@ -37,5 +37,5 @@ for code in dict:
     vector_industryCode[code] = vector[dict[code]]
 
 vector_industryCode = np.array(vector_industryCode)
-np.save("../data/code2vec", vector_industryCode)
+# np.save("../data/code2vec", vector_industryCode)
 # print(vector_industryCode)

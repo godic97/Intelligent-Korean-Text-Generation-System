@@ -41,6 +41,11 @@ def loadData_preprocessing():
 
     return np.array(data)
 
+def loadCorpus():
+    data = np.load("../data/corpus_tmp.npy", allow_pickle=True)
+
+    return data[:, 0], data[:, 1] #corpus, input
+
 def removeBranchName(storeName, branchName):
     pos = storeName.find(branchName)
     if pos > -1:
@@ -58,27 +63,40 @@ def cos_similarity(xp, yp):
     x_L2 = np.sum(xp ** 2)
     y_L2 = np.sum(yp ** 2)
     l2 = math.sqrt(x_L2) * math.sqrt(y_L2)
+
     similarity = np.dot(xp, yp)
 
     similarity = similarity / l2
 
     return similarity
 
-def loadIcode(idx="id"):
-    if idx =="dict":
+def loadIcode(val="id"):
+    if val =="dict":
         icode = np.load("../data/dict_industryCode.npy", allow_pickle=True)
-    elif idx == "id":
+    elif val == "id":
         icode = np.load("../data/id_industryCode.npy", allow_pickle=True).item()
+    elif val =="vec":
+        icode = np.load("../data/code2vec.npy", allow_pickle=True).item()
     return icode
 
-def loadCorpus(idx="id"):
-    if idx == "dict":
-        corpus = np.load("../data/dict_store.npy", allow_pickle=True)
-    elif idx == "id":
-        corpus = np.load("../data/id_store.npy", allow_pickle=True).item()
-    return corpus
+def loadChar(val="id"):
+    if val == "dict":
+        char = np.load("../data/dict_char.npy", allow_pickle=True)
+    elif val == "id":
+        char = np.load("../data/id_char.npy", allow_pickle=True).item()
+    elif val == "vec":
+        char = np.load("../data/char2vec.npy", allow_pickle=True).item()
+    return char
 
 def counter(cnt=0, max=0):
     if cnt % 10000 == 0:
         print("max: ", max, " now: ", cnt)
     return cnt + 1
+
+def weightedPick(weight):
+    t = np.cumsum(weight)
+    s = np.sum(weight)
+
+
+    return np.searchsorted(t, np.random.rand(1) * s)
+

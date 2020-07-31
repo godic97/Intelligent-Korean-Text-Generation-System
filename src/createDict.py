@@ -18,7 +18,7 @@ for sample in data:
 
 print(catalog.shape)
 id_2_dict = np.sort(catalog)
-# np.save("../data/dict_store", id_2_dict)
+# np.save("../data/dict_char", id_2_dict)
 print(id_2_dict)
 
 id = 0
@@ -29,4 +29,4 @@ for dict in id_2_dict:
 
 dict_2_id = np.array(dict_2_id)
 print(dict_2_id)
-# np.save("../data/id_store", dict_2_id)
+# np.save("../data/id_char", dict_2_id)
