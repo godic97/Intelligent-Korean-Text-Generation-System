@@ -97,6 +97,5 @@ def weightedPick(weight):
     t = np.cumsum(weight)
     s = np.sum(weight)
 
-
     return np.searchsorted(t, np.random.rand(1) * s)
 
