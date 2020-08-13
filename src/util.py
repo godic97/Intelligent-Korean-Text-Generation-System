@@ -99,3 +99,6 @@ def weightedPick(weight):
 
     return np.searchsorted(t, np.random.rand(1) * s)
 
+def loadCorpus():
+    corpus = np.load("../data/corpus.npy", allow_pickle=True)
+    return corpus

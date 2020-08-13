@@ -1,7 +1,5 @@
 import numpy as np
 
-
-
 data = np.load("../data/dict_industryCode.npy")
 dict = np.load("../data/id_industryCode.npy",allow_pickle=True).item()
 occurence = np.array([0 for i in range(data.size * data.size)]).reshape((data.size, data.size))
