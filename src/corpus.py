@@ -1,8 +1,10 @@
 import numpy as np
 import util
+import pandas as pd
 
-data = util.loadData_preprocessing()
-data = data[:, [0, 5]]
+data = pd.read_csv("../data/remove_iname.csv", dtype={"상호명" : "string","상권업종소분류코드" : "string"}, na_filter=False)
+data = np.array(data)
+
 code2vec = util.loadIcode(val="vec")
 char2id = util.loadChar(val="id")
 
@@ -17,34 +19,35 @@ char2id = util.loadChar(val="id")
 # corpus = np.array(corpus.split(" "))
 # print(corpus.shape)
 # print(corpus)
-# np.save("../data/corpus", corpus[:corpus.shape[0]-1])
+# np.save("../data/corpus_remove_iname", corpus[:corpus.shape[0]-1])
 
-i = 0
-for sample in data:
-    tmp = np.array([])
-    # print(sample[0])
-    j = 0
-    for alpha in sample[0]:
-        id = char2id.get(alpha, -1)
 
-        if id != -1:
-            tmp = np.append(tmp, id)
-
-        elif j > 0:
-            if tmp[-1] == 1853:
-                continue
-
-        else:
-            tmp = np.append(tmp, 1853)
-
-        j+= 1
-
-    tmp = np.append(tmp, char2id["<end>"])
-    sample[0] = tmp
-    sample[1] = code2vec[sample[1]]
-    i = util.counter(i, data.shape[0])
-    # print(sample[0])
-# np.save("../data/corpus", data)
+# i = 0
+# for sample in data:
+#     tmp = np.array([])
+#     # print(sample[0])
+#     j = 0
+#     for alpha in sample[0]:
+#         id = char2id.get(alpha, -1)
+#
+#         if id != -1:
+#             tmp = np.append(tmp, id)
+#
+#         elif j > 0:
+#             if tmp[-1] == 1853:
+#                 continue
+#
+#         else:
+#             tmp = np.append(tmp, 1853)
+#
+#         j+= 1
+#
+#     tmp = np.append(tmp, char2id["<end>"])
+#     sample[0] = tmp
+#     sample[1] = code2vec[sample[1]]
+#     i = util.counter(i, data.shape[0])
+#
+# np.save("../data/corpus_remove_iname", data)
 
 
 # data = np.load("../data/corpus.npy", allow_pickle=True)
@@ -62,4 +65,18 @@ for sample in data:
 
 # np.save("../data/tmp", tmp)
 
+data = pd.read_csv("../data/first_word.csv", dtype="string")
+data = np.array(data)
 
+tmp = np.array([], dtype="int")
+
+for alpha in data:
+    id = char2id.get(alpha[0], -1)
+    if id == -1:
+        continue
+    else:
+        tmp = np.append(tmp, id)
+
+tmp = np.sort(tmp)
+print(tmp)
+# np.save("../data/first_word", tmp)

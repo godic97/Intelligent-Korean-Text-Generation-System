@@ -2,7 +2,7 @@ import numpy as np
 import util
 from CustomLayers import generator
 
-corpus = util.loadCorpus()
+corpus = util.loadCorpus(rm_iname=True)
 code2vec = util.loadIcode(val="vec")
 char2id = util.loadChar(val="id")
 id2char = util.loadChar(val="dict")
@@ -24,13 +24,11 @@ print("setup some parameter")
 #   corpus_max_len = np.append(corpus_max_len, top_len)
 # print("corpus's max length set: ", corpus_max_len)
 #
-#
-#
 # from tensorflow.keras.models import Model
 # from tensorflow.keras.layers import Dense, LSTM, TimeDistributed, Input, concatenate
 # from keras import backend as K
 # from keras.callbacks import ModelCheckpoint
-from util import perplexity
+# from util import perplexity
 # K.clear_session()
 #
 # seq_input = Input(shape=(None, char_size), name="seq_input")
@@ -45,21 +43,21 @@ from util import perplexity
 # model = Model(inputs=[seq_input, icode_input], outputs=[ann])
 # model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', perplexity])
 # model.summary()
-# model_path = "../data/models/20200829/v1/" + '{epoch:02d}-{perplexity:.4f}.h5'
+# model_path = "../data/models/20200831/v1/" + '20200831_rm_iname_{epoch:02d}_{perplexity:.4f}.h5'
 # cb_checkpoint = ModelCheckpoint(filepath=model_path, monitor='perplexity', verbose=1, save_best_only=False)
-#
 # model.fit(generator(corpus, batch_size, corpus_max_len), steps_per_epoch=corpus_size//batch_size, epochs=epoch, verbose=1, callbacks=[cb_checkpoint])
-# model.save('../data/models/20200829_20_v1.h5') # date_epoch_version
+# model.save('../data/models/20200831_20_v1.h5') # date_epoch_version
 
 from keras.models import load_model
 from util import perplexity
-model = load_model('../data/models/20200829_20_v1.h5', custom_objects={'perplexity':perplexity}, compile=False)
-model.summary()
+model = load_model('../data/models/20200831_20_v1.h5', custom_objects={'perplexity':perplexity}, compile=False)
+# model.summary()
+
+fw = util.loadFirstWords()
 
 def sentence_generation(model, length):
-    ix = [np.random.randint(char_size-2)]
+    ix = [fw[np.random.randint(fw.shape[0]-2)]]
     y_char = [id2char[ix[-1]]]
-    print(ix[-1], '번 글자', y_char[-1], '로 예측을 시작!')
 
     # X = np.zeros((1, 2, char_size))  # (1, 2, 2276) 크기의 X 생성. 즉, LSTM의 입력 시퀀스 생성
     # Y = np.zeros((1, 2, 14))
