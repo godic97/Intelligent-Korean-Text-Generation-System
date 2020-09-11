@@ -41,11 +41,6 @@ def loadData_preprocessing():
 
     return np.array(data)
 
-def loadCorpus():
-    data = np.load("../data/corpus_tmp.npy", allow_pickle=True)
-
-    return data[:, 0], data[:, 1] #corpus, input
-
 def removeBranchName(storeName, branchName):
     pos = storeName.find(branchName)
     if pos > -1:
@@ -99,6 +94,22 @@ def weightedPick(weight):
 
     return np.searchsorted(t, np.random.rand(1) * s)
 
-def loadCorpus():
-    corpus = np.load("../data/corpus.npy", allow_pickle=True)
+def loadCorpus(rm_iname=False):
+    if rm_iname == True:
+        corpus = np.load("../data/corpus_remove_iname.npy", allow_pickle=True)
+    elif rm_iname == False:
+        corpus = np.load("../data/corpus.npy", allow_pickle=True)
+
     return corpus
+
+
+from keras import backend as K
+def perplexity(y_true, y_pred):
+    x_entropy = K.categorical_crossentropy(y_true, y_pred)
+    hx = K.exp(x_entropy)
+
+    return hx
+
+def loadFirstWords():
+    data = np.load("../data/first_word.npy")
+    return data
