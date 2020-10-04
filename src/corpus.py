@@ -4,7 +4,7 @@ import pandas as pd
 
 data = pd.read_csv("../data/remove_iname.csv", dtype={"상호명" : "string","상권업종소분류코드" : "string"}, na_filter=False)
 data = np.array(data)
-
+print(data[1807])
 code2vec = util.loadIcode(val="vec")
 char2id = util.loadChar(val="id")
 
@@ -22,6 +22,7 @@ char2id = util.loadChar(val="id")
 # np.save("../data/corpus_remove_iname", corpus[:corpus.shape[0]-1])
 
 
+# data = np.load("../data/corpus.npy", allow_pickle=True)
 # i = 0
 # for sample in data:
 #     tmp = np.array([])
@@ -32,6 +33,7 @@ char2id = util.loadChar(val="id")
 #
 #         if id != -1:
 #             tmp = np.append(tmp, id)
+#             j = 0
 #
 #         elif j > 0:
 #             if tmp[-1] == 1853:
@@ -39,15 +41,15 @@ char2id = util.loadChar(val="id")
 #
 #         else:
 #             tmp = np.append(tmp, 1853)
+#             j += 1
 #
-#         j+= 1
 #
 #     tmp = np.append(tmp, char2id["<end>"])
 #     sample[0] = tmp
 #     sample[1] = code2vec[sample[1]]
 #     i = util.counter(i, data.shape[0])
 #
-# np.save("../data/corpus_remove_iname", data)
+# np.save("../data/corpus_tmp", data)
 
 
 # data = np.load("../data/corpus.npy", allow_pickle=True)
